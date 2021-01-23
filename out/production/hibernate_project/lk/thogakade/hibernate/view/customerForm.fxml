@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="539.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.thogakade.hibernate.controller.customerformcontroller">
+   <children>
+      <Label alignment="CENTER" layoutX="229.0" layoutY="14.0" prefHeight="23.0" prefWidth="142.0" text="Customer" textAlignment="RIGHT" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="Times New Roman" size="21.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtid" focusColor="#1411d3" layoutX="44.0" layoutY="79.0" onMouseClicked="#txtSearchOnAction" prefHeight="33.0" prefWidth="164.0" promptText="Customer Id" unFocusColor="BLACK">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtname" focusColor="#1411d3" layoutX="44.0" layoutY="131.0" prefHeight="33.0" prefWidth="164.0" promptText="Customer Name" unFocusColor="BLACK">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtaddress" focusColor="#1411d3" layoutX="44.0" layoutY="187.0" prefHeight="33.0" prefWidth="164.0" promptText="Customer Address" unFocusColor="BLACK">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtdob" focusColor="#1411d3" layoutX="44.0" layoutY="243.0" prefHeight="33.0" prefWidth="164.0" promptText="Customer DOB" unFocusColor="BLACK">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtno" focusColor="#1411d3" layoutX="44.0" layoutY="302.0" prefHeight="33.0" prefWidth="164.0" promptText="Customer Phone_NO" unFocusColor="BLACK">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtsalary" focusColor="#1411d3" layoutX="44.0" layoutY="355.0" prefHeight="33.0" prefWidth="164.0" promptText="Customer Salary" unFocusColor="BLACK">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txtprovince" focusColor="#1411d3" layoutX="44.0" layoutY="408.0" prefHeight="33.0" prefWidth="164.0" promptText="Customer Province" unFocusColor="BLACK">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btnAdd" layoutX="168.0" layoutY="491.0" onAction="#btnAddOnAction" prefHeight="33.0" prefWidth="99.0" style="-fx-background-color: red; -fx-border-radius: 20;" text="ADD">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnUpdate" layoutX="333.0" layoutY="491.0" onAction="#btnUpdateOnAction" prefHeight="33.0" prefWidth="99.0" style="-fx-background-color: Yellow;" text="UPDATE">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnDelete" layoutX="493.0" layoutY="491.0" onAction="#btnDeleteOnAction" prefHeight="33.0" prefWidth="99.0" style="-fx-background-color: LIme;" text="DELETE">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="tblcustomer" layoutX="269.0" layoutY="120.0" prefHeight="200.0" prefWidth="752.0">
+        <columns>
+          <TableColumn fx:id="tblid" prefWidth="75.0" text="Customer ID" />
+          <TableColumn fx:id="tblname" prefWidth="107.0" text="Customer Name" />
+            <TableColumn fx:id="tbladdress" prefWidth="110.0" text="Customer Address" />
+            <TableColumn fx:id="tbldob" minWidth="8.0" prefWidth="100.0" text="Customer DOB" />
+            <TableColumn fx:id="tblno" minWidth="0.0" prefWidth="132.0" text="Customer Phone_no" />
+            <TableColumn fx:id="tblsalary" prefWidth="103.0" text="Customer Salary" />
+            <TableColumn fx:id="tblprovince" prefWidth="124.0" text="Customer Province" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
