@@ -6,25 +6,24 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-/**
- * @author : K.S.P.D De Silva <sanodeemantha@gmail.com>
- * @since : 1/20/21
- **/
-
 public class FactoryConfiguration {
     private static FactoryConfiguration factoryConfiguration;
     private SessionFactory sessionFactory;
-    private FactoryConfiguration(){
-        Configuration configure = new Configuration().configure()
+
+    private FactoryConfiguration() {
+        Configuration configuration = new Configuration()
                 .addAnnotatedClass(Customer.class);
-        sessionFactory = configure.buildSessionFactory();
+        sessionFactory = configuration.buildSessionFactory();
     }
 
-    public static FactoryConfiguration getInstance(){
-        return (factoryConfiguration == null) ? factoryConfiguration = new FactoryConfiguration() : factoryConfiguration;
+    public static FactoryConfiguration getInstance() {
+        if (factoryConfiguration == null) {
+            factoryConfiguration = new FactoryConfiguration();
+        }
+        return factoryConfiguration;
     }
 
-    public Session getSession(){
+    public Session getSession() {
         return sessionFactory.openSession();
     }
 }

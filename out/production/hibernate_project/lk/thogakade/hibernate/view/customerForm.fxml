@@ -10,12 +10,12 @@
 
 <AnchorPane prefHeight="539.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.thogakade.hibernate.controller.customerformcontroller">
    <children>
-      <Label alignment="CENTER" layoutX="229.0" layoutY="14.0" prefHeight="23.0" prefWidth="142.0" text="Customer" textAlignment="RIGHT" textOverrun="CENTER_ELLIPSIS">
+      <Label alignment="CENTER" layoutX="444.0" layoutY="14.0" prefHeight="23.0" prefWidth="142.0" text="Customer" textAlignment="RIGHT" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font name="Times New Roman" size="21.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtid" focusColor="#1411d3" layoutX="44.0" layoutY="79.0" onMouseClicked="#txtSearchOnAction" prefHeight="33.0" prefWidth="164.0" promptText="Customer Id" unFocusColor="BLACK">
+      <JFXTextField fx:id="txtid" focusColor="#1411d3" layoutX="44.0" layoutY="79.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="164.0" promptText="Customer Id" unFocusColor="BLACK">
          <font>
             <Font name="Times New Roman" size="14.0" />
          </font>
@@ -65,7 +65,7 @@
             <Font name="Times New Roman Bold" size="18.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tblcustomer" layoutX="269.0" layoutY="120.0" prefHeight="200.0" prefWidth="752.0">
+      <TableView fx:id="tblcustomer" layoutX="269.0" layoutY="120.0" onMouseClicked="#tblOnAction" prefHeight="200.0" prefWidth="752.0" style="-fx-background-radius: 15px; -fx-background-color: gray;">
         <columns>
           <TableColumn fx:id="tblid" prefWidth="75.0" text="Customer ID" />
           <TableColumn fx:id="tblname" prefWidth="107.0" text="Customer Name" />
@@ -76,5 +76,10 @@
             <TableColumn fx:id="tblprovince" prefWidth="124.0" text="Customer Province" />
         </columns>
       </TableView>
+      <JFXButton fx:id="btnrefesh" layoutX="948.0" layoutY="495.0" onAction="#btnrefeshOnAction" ripplerFill="#ee0202" style="-fx-background-radius: 20px; -fx-background-color: lightblue;" text="Refresh">
+         <font>
+            <Font name="Times New Roman Bold" size="13.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

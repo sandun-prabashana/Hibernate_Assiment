@@ -15,7 +15,7 @@ public interface SuperDAO <Entity extends SuperEntity,ID extends Serializable>{
 
     public boolean update(Entity entity)throws Exception;
 
-    public Entity find(Entity entity, String id)throws Exception;
+    public Entity search (ID id) throws Exception;
 
-    public ObservableList<Customer> findAll()throws Exception;
+    public List<Entity> getAll () throws Exception;
 }

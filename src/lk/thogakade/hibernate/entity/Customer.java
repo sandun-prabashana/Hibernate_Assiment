@@ -24,6 +24,10 @@ public class Customer implements SuperEntity {
         Province = province;
     }
 
+    public Customer() {
+
+    }
+
     public String getId() {
         return Id;
     }

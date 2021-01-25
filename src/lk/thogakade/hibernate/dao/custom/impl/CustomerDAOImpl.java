@@ -8,9 +8,11 @@ import lk.thogakade.hibernate.util.FactoryConfiguration;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 import javax.swing.text.html.parser.Entity;
 import java.sql.ResultSet;
+import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
@@ -57,33 +59,29 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public Customer find(Customer entity, String id) throws Exception {
-        return null;
+    public Customer search(String s) throws Exception {
+
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM Customer WHERE Id = ?1");
+        query.setParameter(1, s);
+        Customer customer = (Customer) query.uniqueResult();
+        transaction.commit();
+        session.close();
+        return customer;
     }
 
     @Override
-    public ObservableList<Customer> findAll() throws Exception {
+    public List<Customer> getAll() throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
-
         Transaction transaction = session.beginTransaction();
-
-        NativeQuery sqlQuery = session.createSQLQuery("select * from Customer");
-
-
-//        session.createQuery("from Customer");
+        Query query = session.createQuery("FROM Customer");
+        List<Customer> list = query.list();
         transaction.commit();
-        ResultSet rst = (ResultSet) sqlQuery.uniqueResult();
-        ObservableList<Customer> list = FXCollections.observableArrayList();
-        while ((rst==null)) {
-            list.add(new Customer(rst.getString("Id"), rst.getString("Name"), rst.getString("Address")
-                    , rst.getString("DOB"), rst.getString("Phone_No"), rst.getString("Salary")
-                    , rst.getString("Province")));
-
-
-        }
         session.close();
         return list;
     }
+
 
     @Override
     public String getLastCustomerID() {
@@ -99,38 +97,5 @@ public class CustomerDAOImpl implements CustomerDAO {
         return id;
     }
 
-//    @Override
-//    public Customer find(CustomerDTO entity, String s) throws Exception {
-//        Session session = FactoryConfiguration.getInstance().getSession();
-//
-//        Transaction transaction = session.beginTransaction();
-//
-//        session.load(entity,s);
-//
-//        transaction.commit();
-//
-//        session.close();
-//        return new Customer(entity.getId(),entity.getName(),entity.getAddress(),entity.getDOB(),entity.getPhone_No(),
-//                entity.getSalary(),entity.getProvince());
-//    }
 
-
-//    @Override
-//    public ObservableList<Entity> findAll() throws Exception {
-//        Session session = FactoryConfiguration.getInstance().getSession();
-//
-//        Transaction transaction = session.beginTransaction();
-//
-//        NativeQuery sqlQuery = session.createSQLQuery("select * from Customer");
-//        String id = (String) sqlQuery.uniqueResult();
-//        transaction.commit();
-//
-//        session.close();
-//        ObservableList<Customer> list = FXCollections.observableArrayList();
-//        list.forEach(c -> {
-//            list.add(new Customer(c.getId(),c.getName(),c.getAddress(),c.getDOB(),
-//                    c.getPhone_No(),c.getSalary(),c.getProvince()));
-//        });
-//        return list;
-//    }
 }

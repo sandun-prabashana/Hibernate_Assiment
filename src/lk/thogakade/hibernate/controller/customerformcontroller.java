@@ -20,6 +20,7 @@ import lk.thogakade.hibernate.dto.CustomerDTO;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class customerformcontroller implements Initializable {
@@ -33,6 +34,7 @@ public class customerformcontroller implements Initializable {
     public JFXButton btnAdd;
     public JFXButton btnUpdate;
     public JFXButton btnDelete;
+    public JFXButton btnrefesh;
 
     @FXML
     private TableView<CustomerDTO> tblcustomer;
@@ -60,7 +62,6 @@ public class customerformcontroller implements Initializable {
 
     static CustomerBO customerBO = (CustomerBO) BOFactry.getInstance().getBO(BOFactry.BOTypes.CUSTOMER);
 
-    private ObservableList<CustomerDTO> rows= FXCollections.observableArrayList();
 
     public void btnAddOnAction(ActionEvent actionEvent) {
         String id = txtid.getText();
@@ -79,6 +80,7 @@ public class customerformcontroller implements Initializable {
 
             if(added){
                 new Alert(Alert.AlertType.CONFIRMATION,"OK").showAndWait();
+                get();
             }
 
             txtid.clear();
@@ -111,6 +113,7 @@ public class customerformcontroller implements Initializable {
 
             if(added){
                 new Alert(Alert.AlertType.CONFIRMATION,"Customer Update Succcesfull").showAndWait();
+                get();
             }else {
                 new Alert(Alert.AlertType.WARNING,"Fail",ButtonType.OK).show();
             }
@@ -144,6 +147,7 @@ public class customerformcontroller implements Initializable {
 
             if(added){
                 new Alert(Alert.AlertType.CONFIRMATION,"Customer Remove Succcesfull").showAndWait();
+                get();
             }else {
                 new Alert(Alert.AlertType.WARNING,"Fail",ButtonType.OK).show();
             }
@@ -160,44 +164,20 @@ public class customerformcontroller implements Initializable {
         }
     }
 
-    public void txtSearchOnAction(MouseEvent mouseEvent) {
-        String id = txtid.getText();
-        String name = txtname.getText();
-        String address = txtaddress.getText();
-        String dob=txtdob.getText();
-        String no=txtno.getText();
-        String salary=txtsalary.getText();
-        String province=txtprovince.getText();
 
-        CustomerDTO customer = new CustomerDTO(id, name, address,dob,no,salary,province);
-        try{
-            CustomerDTO customerDTO=customerBO.searchCustomer(customer,id);
-            if(customerDTO!=null){
-//                txtName.setText(studentDTO.getName());
-//                txtAddress.setText(studentDTO.getAddress());
-            }
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     public void get() {
         try {
-            rows=customerBO.getCustomer();
-
-            tblid.setCellValueFactory(new PropertyValueFactory<CustomerDTO,String>("Id"));
-            tblname.setCellValueFactory(new PropertyValueFactory<CustomerDTO,String>("Name"));
-            tbladdress.setCellValueFactory(new PropertyValueFactory<CustomerDTO,String>("Address"));
-            tblcustomer.getItems().clear();
-            tblcustomer.setItems(rows);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            List<CustomerDTO> cusList = customerBO.findall();
+            ObservableList<CustomerDTO> list = FXCollections.observableArrayList();
+            list.addAll(cusList);
+            tblcustomer.setItems(list);
+            tblid.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("Id"));
+            tblname.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("Name"));
+            tbladdress.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("Address"));
+            tbldob.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("DOB"));
+            tblno.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("Phone_No"));
+            tblsalary.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("Salary"));
+            tblprovince.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("Province"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -215,5 +195,51 @@ public class customerformcontroller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         generateID();
+        get();
+    }
+
+    public void tblOnAction(MouseEvent mouseEvent) {
+        txtid.setText(tblcustomer.getSelectionModel().getSelectedItem().getId());
+        txtname.setText(tblcustomer.getSelectionModel().getSelectedItem().getName());
+        txtaddress.setText(tblcustomer.getSelectionModel().getSelectedItem().getAddress());
+        txtdob.setText(tblcustomer.getSelectionModel().getSelectedItem().getDOB());
+        txtno.setText(tblcustomer.getSelectionModel().getSelectedItem().getPhone_No());
+        txtsalary.setText(tblcustomer.getSelectionModel().getSelectedItem().getSalary());
+        txtprovince.setText(tblcustomer.getSelectionModel().getSelectedItem().getProvince());
+    }
+
+    public void btnrefeshOnAction(ActionEvent actionEvent) {
+        get();
+        txtid.clear();
+        txtname.clear();
+        txtaddress.clear();
+        txtprovince.clear();
+        txtno.clear();
+        txtsalary.clear();
+        txtdob.clear();
+        generateID();
+    }
+
+    public void txtSearchOnAction(ActionEvent actionEvent) {
+        String id = txtid.getText();
+
+        try{
+            CustomerDTO customerDTO=customerBO.searchCustomer(id);
+            if(customerDTO!=null){
+                txtname.setText(customerDTO.getName());
+                txtaddress.setText(customerDTO.getAddress());
+                txtdob.setText(customerDTO.getDOB());
+                txtno.setText(customerDTO.getPhone_No());
+                txtsalary.setText(customerDTO.getSalary());
+                txtprovince.setText(customerDTO.getProvince());
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
